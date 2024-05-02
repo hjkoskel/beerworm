@@ -311,9 +311,9 @@ pub fn main() !void {
 
         try player.move();
 
-        var beerheight = beerScale * @as(f32, @floatFromInt(beerTextures[beerIndexNow].height));
+        const beerheight = beerScale * @as(f32, @floatFromInt(beerTextures[beerIndexNow].height));
+        const medkitheight = medkitScale * @as(f32, @floatFromInt(medkitTexture.height));
 
-        var medkitheight = medkitScale * @as(f32, @floatFromInt(medkitTexture.height));
         if (medkitVisible and (player.headInArea(.{ .x = medkitPosition.x, .y = medkitPosition.y, .width = @as(f32, @floatFromInt(settings.beerWidthPixels)), .height = medkitheight }))) {
             player.drunkness = 0;
             medkitAppeared = 0;
