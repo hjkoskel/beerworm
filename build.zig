@@ -1,6 +1,6 @@
 // build.zig
 const std = @import("std");
-const raySdk = @import("raylib/src/build.zig");
+const raySdk = @import("raylib/build.zig");
 
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
@@ -9,15 +9,16 @@ pub fn build(b: *std.Build) !void {
 
     const exe = b.addExecutable(.{
         .name = "kaljamato",
-        .root_source_file = .{ .path = "src/main.zig" },
+        .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
     });
-    b.installArtifact(exe);
 
-    const raylib = try raySdk.addRaylib(b, target, optimize, .{});
-    exe.addIncludePath(.{ .path = "raylib/src" });
-    exe.linkLibrary(raylib);
+    exe.addIncludePath(b.path("raylib/src"));
+    exe.addLibraryPath(b.path("raylib/src"));
+    exe.linkSystemLibrary("raylib");
+    exe.linkLibC();
+    b.installArtifact(exe);
 
     const run_cmd = b.addRunArtifact(exe);
 

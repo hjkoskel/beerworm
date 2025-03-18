@@ -6,7 +6,7 @@ const r = @cImport({
 
 const std = @import("std");
 const m = std.math;
-const RndGen = std.rand.DefaultPrng;
+const RndGen = std.Random.DefaultPrng;
 var rnd = RndGen.init(0);
 
 var gpa_server = std.heap.GeneralPurposeAllocator(.{ .stack_trace_frames = 12 }){};
